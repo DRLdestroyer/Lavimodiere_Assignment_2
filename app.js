@@ -13,7 +13,7 @@ app.use(bodyparser.urlencoded({extended:true}));//all reading of encoded urls
 app.use(express.json());
 
 //makes the connection to the database server
-mongoose.connect('mongodb://localhost:27017/gameEntries', {//connect to mongoose //connect('connection string', {exeptions})
+mongoose.connect('mongodb://localhost:27017/recordEntries', {//connect to mongoose //connect('connection string', {exeptions})
     useNewUrlParser:true
 }).then(function(){
     console.log("Connected to MongoDB Database");
@@ -22,46 +22,49 @@ mongoose.connect('mongodb://localhost:27017/gameEntries', {//connect to mongoose
 });
 
 //load in database templates
-require('./models/Game');//require folder
-var Game = mongoose.model('game');
+require('./models/Record');//require folder
+var Record = mongoose.model('record');
 
-//basic code for saving an entry (every startup)
-/*
-//for fun create an entry in the database
-var Game = mongoose.model('Game', {nameofgame:String});//model = schema
-
-var game = new Game({nameofgame:"Skyrim"});
-game.save().then(function(){//save the entry
-    Console.log("Game Saved");
+//!edit to obtain data after game ends and is new high score//uncommenting one makes the other not work
+//name
+//var Record = mongoose.model('Record', {name:String});//model = schema
+//var record = new Record({name:"New Record Holder"});
+//record.save().then(function(){//save the entry
+//    Console.log("Record Saved");
+//})
+//score
+var Record = mongoose.model('Record', {score:Number});//model = schema
+var record = new Record({score:5});
+record.save().then(function(){//save the entry
+    console.log("Record Saved");
 })
-*/
 
 //example of a POST route
-app.post('/saveGame', function(req,res){
+app.post('/saveRecord', function(req,res){
     console.log("Request Made");
     console.log(req.body);
 
-    new Game(req.body).save().then(function(){
-        res.redirect('gamelist.html');
+    new Record(req.body).save().then(function(){
+        res.redirect('recordlist.html');
     })
 })
 
 //gets the data for the list
 app.get('/getData',function(req,res){//utilize mongoose commands to grab data //{} = all data //.then = promise
-    Game.find({}).then(function(game){
-        res.json({game})
+    Record.find({}).then(function(record){
+        res.json({record})
     })
 })
 
-//postroute to delete game entry
-app.post('/deleteGame', function(req,res){
-    console.log('Game Deleted', req.body._id);
-    Game.findByIdAndDelete(req.body._id).exec();
-    res.redirect('gamelist.html');
+//postroute to delete record entry
+app.post('/deleteRecord', function(req,res){
+    console.log('Record Deleted', req.body._id);
+    Record.findByIdAndDelete(req.body._id).exec();
+    res.redirect('recordlist.html');
 })
 
 
 app.use(express.static(__dirname+"/views"))
-app.listen(3000, function(){//connect to database
-    console.log("Listening on port 3000");
+app.listen(5000, function(){//connect to database
+    console.log("Listening on port 5000");
 });

@@ -1,0 +1,26 @@
+{
+  "name": "lavimodiere_assignment_2",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.11.13",
+    "save": "^2.4.0",
+    "ws": "^7.4.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DRLdestroyer/Lavimodiere_Assignment_2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DRLdestroyer/Lavimodiere_Assignment_2/issues"
+  },
+  "homepage": "https://github.com/DRLdestroyer/Lavimodiere_Assignment_2#readme",
+  "description": ""
+}
